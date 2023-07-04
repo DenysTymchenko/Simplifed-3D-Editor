@@ -4,6 +4,8 @@ import Time from './Utils/Time';
 import Camera from './Camera';
 import Renderer from './Renderer';
 import World from './World/World';
+import Loaders from './Utils/Loaders';
+import ControlPanel from './ControlPanel';
 
 let instance = null;
 
@@ -19,6 +21,8 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.world = new World();
+    this.loaders = new Loaders();
+    this.controlPanel = new ControlPanel();
 
     this.sizes.on('resize', () => this.resize());
     this.time.on('tick', () => this.update());
