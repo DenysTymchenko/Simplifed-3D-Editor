@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
-    <title>Simplified Editor</title>
-  </head>
-  <body>
-    <canvas class="webgl"></canvas>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
+  <title>Simplified Editor</title>
+</head>
+
+<body>
+  <ul class="control-panel">
+    <li>Add Model
+      <ul>
+        <li id="glb">GLB</li>
+        <li id="gltf">GLTF</li>
+        <li id="fbx">FBX</li>
+      </ul>
+    </li>
+    <li>Configure
+      <ul>
+        <li><input type="color" id="color"></li>
+        <li>
+          Opacity
+          <br />
+          <input type="range" id="opacity" min="0" max="1" step="0.1" value="1">
+        </li>
+        <li>
+          Metalness
+          <br />
+          <input type="range" id="metalness" min="0" max="1" step="0.1" value="1">
+        </li>
+        <li>
+          Roughness
+          <br />
+          <input type="range" id="roughness" min="0" max="1" step="0.1" value="1">
+        </li>
+      </ul>
+    </li>
+    <li id="envMap">envMap</li>
+  </ul>
+  <canvas class="webgl"></canvas>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>

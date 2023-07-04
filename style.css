@@ -5,9 +5,36 @@
   overflow: hidden;
 }
 
+ul {
+  list-style: none;
+}
+
+li {
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+ul.control-panel > li {
+  display: inline-block;
+}
+
+ul.control-panel > li ul {
+  position: absolute;
+  display: none;
+}
+
+ul.control-panel > li:hover ul {
+  display: block;
+  opacity: 1;
+}
+
+
 .webgl {
   position: fixed;
   top: 0;
   left: 0;
   outline: none;
+  z-index: -1;
 }
