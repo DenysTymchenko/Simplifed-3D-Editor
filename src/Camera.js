@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import EventEmitter from './Utils/EventEmmiter.js';
 import Experience from './Experience.js';
 
@@ -27,8 +28,13 @@ export default class Camera extends EventEmitter {
   }
 
   setOrbitControls(renderer) {
-    this.controls = new OrbitControls(this.instance, renderer.domElement);
-    this.controls.rotateSpeed = 0.5
+    this.orbitControls = new OrbitControls(this.instance, renderer.domElement);
+    this.orbitControls.rotateSpeed = 0.5
+  }
+
+  setTransformControls(renderer) {
+    this.transformControls = new TransformControls(this.instance, renderer.domElement);
+    this.scene.add(this.transformControls);
   }
 
   resize() {

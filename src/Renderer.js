@@ -18,6 +18,7 @@ export default class Renderer {
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
 
     this.camera.setOrbitControls(this.instance);
+    this.camera.setTransformControls(this.instance);
   }
 
   resize() {

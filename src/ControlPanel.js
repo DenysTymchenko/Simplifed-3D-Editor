@@ -1,11 +1,10 @@
 import Experience from './Experience';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 export default class ControlPanel {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
-    this.loaders = this.experience.loaders;
+    this.resources = this.experience.resources;
 
     this.instance = document.querySelector('.control-panel');
     this.addModelbtn = document.getElementById('add-model');
@@ -21,7 +20,7 @@ export default class ControlPanel {
       const path = URL.createObjectURL(file);
       const type = file.name.split('.').pop();
 
-      this.loaders.load(path, type);
+      this.resources.load(path, type);
     })
 
     input.click();
