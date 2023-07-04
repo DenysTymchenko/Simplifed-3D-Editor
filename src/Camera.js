@@ -28,7 +28,7 @@ export default class Camera extends EventEmitter {
 
   setOrbitControls(renderer) {
     this.controls = new OrbitControls(this.instance, renderer.domElement);
-    this.controls.enableDumping = true;
+    this.controls.rotateSpeed = 0.5
   }
 
   resize() {
