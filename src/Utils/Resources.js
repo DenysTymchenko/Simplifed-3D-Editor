@@ -18,13 +18,13 @@ export default class Resources extends EventEmitter {
   }
 
   setInstance() {
-    this.instance = {}
+    this.loaders = {}
 
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/')
 
-    this.instance.gltfLoader = new GLTFLoader();
-    this.instance.gltfLoader.setDRACOLoader(dracoLoader);
+    this.loaders.gltfLoader = new GLTFLoader();
+    this.loaders.gltfLoader.setDRACOLoader(dracoLoader);
   }
 
   load(path, type) {
@@ -32,7 +32,7 @@ export default class Resources extends EventEmitter {
       case 'gltf':
       case 'glb':
       case 'fbx':
-        this.instance.gltfLoader.load(
+        this.loaders.gltfLoader.load(
           path,
           (model) => {
             this.items.push(model.scene);

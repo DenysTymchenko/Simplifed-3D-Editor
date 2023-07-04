@@ -29,11 +29,13 @@ export default class Camera extends EventEmitter {
 
   setOrbitControls(renderer) {
     this.orbitControls = new OrbitControls(this.instance, renderer.domElement);
-    this.orbitControls.rotateSpeed = 0.5
+    this.orbitControls.rotateSpeed = 0.5 // Using this instead of enableDamping, so movement is precise, but not extreamly smooth
   }
 
   setTransformControls(renderer) {
+    // Controls needed for working with selected object (positioning, rotation, etc.);
     this.transformControls = new TransformControls(this.instance, renderer.domElement);
+    // Unlike the OrbitControls, this one must be added to the scene, because we need it to be visible.
     this.scene.add(this.transformControls);
   }
 

@@ -22,7 +22,7 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
     this.resources = new Resources();
-    this.controlPanel = new ControlPanel();
+    this.controlPanel = new ControlPanel(); // The logic of all control panel (it's buttons, inputs, etc.) contains here
 
     this.sizes.on('resize', () => this.resize());
     this.time.on('tick', () => this.update());
