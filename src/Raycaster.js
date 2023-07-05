@@ -12,7 +12,7 @@ export default class Raycaster {
     this.mouse = new THREE.Vector2();
     window.addEventListener('mousemove', (e) => {
       this.mouse.x = (e.clientX / this.sizes.width) * 2 - 1;
-      this.mouse.y = - (e.clientY / this.sizes.height) * 2 + 1;
+      this.mouse.y = -(e.clientY / this.sizes.height) * 2 + 1;
     });
 
     window.addEventListener('click', () => this.castRay());
@@ -21,11 +21,12 @@ export default class Raycaster {
   castRay() {
     this.instance = new THREE.Raycaster();
     this.instance.setFromCamera(this.mouse, this.camera.instance);
-    
+
     this.intersect = this.instance.intersectObjects(this.resources.items)[0];
 
-    if(this.intersect) {
-      this.world.objects.setActive(this.intersect.object);
+    if (this.intersect) {
+      const item = this.resources.items.find(item => item.children[0] === this.intersect.object);
+      this.world.objects.setActive(item);
     } else {
       this.world.objects.removeActive();
     }
