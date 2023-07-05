@@ -35,6 +35,9 @@ export default class Camera extends EventEmitter {
   setTransformControls(renderer) {
     // Controls needed for working with selected object (positioning, rotation, etc.);
     this.transformControls = new TransformControls(this.instance, renderer.domElement);
+    this.transformControls.addEventListener('dragging-changed', (e) => {
+      this.orbitControls.enabled = !e.value; // Disable OrbitControls when dragging starts, enable them when dragging ends
+    });
     // Unlike the OrbitControls, this one must be added to the scene, because we need it to be visible.
     this.scene.add(this.transformControls);
   }
