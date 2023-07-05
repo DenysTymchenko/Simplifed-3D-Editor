@@ -9,7 +9,6 @@ export default class Objects {
     this.resources = this.experience.resources;
 
     this.active = null;
-    this.outline = null;
 
     this.resources.on('newModel', () => this.addNewModelToTheScene());
   }
@@ -22,13 +21,14 @@ export default class Objects {
   }
 
   setActive(model) {
+    this.removeActive();
     this.active = model;
-
-    const edges = new THREE.EdgesGeometry(model.children[0].geometry);
-    this.outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
-
-    this.scene.add(this.outline);
     this.transformControls.attach(model);
+  }
+
+  removeActive() {
+    this.active = null;
+    this.transformControls.detach()
   }
 
   updateActiveOutline() {

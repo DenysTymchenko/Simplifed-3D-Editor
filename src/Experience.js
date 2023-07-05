@@ -6,6 +6,7 @@ import Renderer from './Renderer';
 import World from './World/World';
 import Resources from './Utils/Resources';
 import ControlPanel from './ControlPanel';
+import Raycaster from './Raycaster';
 
 let instance = null;
 
@@ -23,6 +24,7 @@ export default class Experience {
     this.resources = new Resources();
     this.world = new World();
     this.controlPanel = new ControlPanel(); // The logic of all control panel (it's buttons, inputs, etc.) contains here
+    this.raycater = new Raycaster();
 
     this.sizes.on('resize', () => this.resize());
     this.time.on('tick', () => this.update());
