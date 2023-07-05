@@ -1,6 +1,7 @@
 import Experience from '../Experience.js';
 import Environment from './Environment.js';
 import Floor from './Floor.js';
+import Objects from './Objects.js';
 
 export default class World {
   constructor() {
@@ -9,5 +10,6 @@ export default class World {
 
     this.environment = new Environment();
     this.floor = new Floor();
+    this.objects = new Objects();
   }
 }

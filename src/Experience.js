@@ -20,8 +20,8 @@ export default class Experience {
     this.scene = new THREE.Scene();
     this.camera = new Camera();
     this.renderer = new Renderer();
-    this.world = new World();
     this.resources = new Resources();
+    this.world = new World();
     this.controlPanel = new ControlPanel(); // The logic of all control panel (it's buttons, inputs, etc.) contains here
 
     this.sizes.on('resize', () => this.resize());
@@ -34,6 +34,7 @@ export default class Experience {
   }
 
   update() {
+    this.world.objects.updateActiveOutline();
     this.renderer.update();
   }
 }

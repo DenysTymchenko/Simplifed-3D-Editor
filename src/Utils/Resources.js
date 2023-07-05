@@ -9,8 +9,6 @@ export default class Resources extends EventEmitter {
   constructor() {
     super();
     this.experience = new Experience();
-    this.scene = this.experience.scene;
-    this.transformControls = this.experience.camera.transformControls;
 
     this.items = [];
 
@@ -36,9 +34,7 @@ export default class Resources extends EventEmitter {
           path,
           (model) => {
             this.items.push(model.scene);
-            this.scene.add(model.scene);
-            this.deactivateActive();
-            this.setActive(model.scene);
+            this.trigger('newModel');
           }
         );
         break;
@@ -51,12 +47,4 @@ export default class Resources extends EventEmitter {
   deactivateActive() {
     this.scene.remove(this.outline);
   } 
-
-  setActive(scene) {
-    const edges = new THREE.EdgesGeometry(scene.children[0].geometry);
-    this.outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
-    
-    this.scene.add(this.outline);
-    this.transformControls.attach(scene);
-  }
 }
