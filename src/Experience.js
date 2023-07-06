@@ -36,10 +36,10 @@ export default class Experience {
   }
 
   update() {
-    !this.world.objects.active
+    !this.world.models.active
       ? this.controlPanel.disableModelConfiguration()
       : this.controlPanel.enableModelConfiguration();
-    this.world.objects.updateActiveOutline();
+    this.world.models.updateActiveOutline();
     this.renderer.update();
   }
 }

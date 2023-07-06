@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience';
 
-export default class Objects {
+export default class Models {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
@@ -65,7 +65,7 @@ export default class Objects {
   }
 
   updateInputs() {
-    this.active.materials.forEach(material => {  
+    this.active.materials.forEach(material => {
       this.experience.controlPanel.colorInput.value = `#${material.color.getHexString()}`;
       this.experience.controlPanel.opacityInput.value = material.opacity;
       this.experience.controlPanel.metalnessInput.value = material.metalness;

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import Experience from '../Experience.js';
 import Environment from './Environment.js';
 import Floor from './Floor.js';
-import Objects from './Objects.js';
+import Models from './Models.js';
 
 export default class World {
   constructor() {
@@ -12,7 +12,7 @@ export default class World {
 
     this.environment = new Environment();
     this.floor = new Floor();
-    this.objects = new Objects();
+    this.models = new Models();
 
     this.resources.on('setBg', () => this.setBackground());
   }
@@ -21,7 +21,7 @@ export default class World {
     const envMap = this.resources.latestEnvMap;
     envMap.mapping = THREE.EquirectangularReflectionMapping;
     envMap.colorSpace = THREE.SRGBColorSpace;
-    
+
     this.scene.background = envMap;
   }
 }
