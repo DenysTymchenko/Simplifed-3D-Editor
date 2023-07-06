@@ -7,17 +7,18 @@ export default class ControlPanel {
     this.resources = this.experience.resources;
     this.world = this.experience.world;
 
+    this.addModelbtn = document.getElementById('add-model'),
     this.configureTab = document.getElementById('configure-tab');
     this.configureTab.inputs = [
-      this.addModelbtn = document.getElementById('add-model'),
       this.colorInput = document.getElementById('color'),
       this.opacityInput = document.getElementById('opacity'),
       this.metalnessInput = document.getElementById('metalness'),
       this.roughnessInput = document.getElementById('roughness'),
-    ]
-
+    ];
+    this.setBackgroundBtn = document.getElementById('set-bg');
 
     this.addModelbtn.addEventListener('click', () => this.importData());
+    this.setBackgroundBtn.addEventListener('click', () => this.importData());
     this.configureTab.inputs.forEach(input => input.addEventListener('input', () => this.world.objects.changeMaterial(input)));
   }
 

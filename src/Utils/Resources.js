@@ -1,6 +1,7 @@
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import EventEmitter from './EventEmmiter.js';
 import Experience from '../Experience.js';
 
@@ -24,6 +25,7 @@ export default class Resources extends EventEmitter {
     this.loaders.gltfLoader.setDRACOLoader(dracoLoader);
 
     this.loaders.fbxLoader = new FBXLoader();
+    this.loaders.rgbeLoader = new RGBELoader();
   }
 
   load(path, type) {
@@ -45,6 +47,16 @@ export default class Resources extends EventEmitter {
           (model) => {
             this.items.push(model);
             this.trigger('newModel');
+          }
+        );
+        break;
+
+      case 'hdr':
+        this.loaders.rgbeLoader.load(
+          path,
+          (background) => {
+            this.items.push(background);
+            this.experience.world.setBackground(background);
           }
         );
         break;
