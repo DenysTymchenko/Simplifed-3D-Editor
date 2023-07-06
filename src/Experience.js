@@ -15,6 +15,7 @@ export default class Experience {
     if (instance) return instance;
     instance = this;
 
+    this.errorHintDiv = document.querySelector('.error-hint');
     this.canvas = canvas;
     this.sizes = new Sizes();
     this.time = new Time();
@@ -30,6 +31,13 @@ export default class Experience {
 
     this.sizes.on('resize', () => this.resize());
     this.time.on('tick', () => this.update());
+  }
+
+  triggerErrorHintDiv(text) {
+    this.errorHintDiv.innerText = text;
+    this.errorHintDiv.classList.remove('hidden');
+
+    setTimeout(() => this.errorHintDiv.classList.add('hidden'), 4500);
   }
 
   resize() {

@@ -18,7 +18,7 @@ ul {
 
 li {
   color: white;
-  padding: 10px;
+  padding: 5px;
   margin-right: 20px;
 }
 
@@ -50,6 +50,26 @@ ul.control-panel > li:hover ul li {
 
 ul.control-panel > li.disabled:hover ul {
   display: none;
+}
+
+.error-hint {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  text-align: center;
+  opacity: 1;
+  transition: 0.5s ease-in-out;
+}
+
+.error-hint.hidden {
+  opacity: 0;
 }
 
 .webgl {

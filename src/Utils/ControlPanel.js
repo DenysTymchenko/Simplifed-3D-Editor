@@ -35,12 +35,17 @@ export default class ControlPanel {
       const type = file.name.split('.').pop();
 
       if (pressedBtn === 'set-bg' || pressedBtn === 'set-model-envMap') {
-        if (type !== 'jpg' && type !== 'hdr') alert('Wrong file format selected');
-        else this.resources.load(path, type, pressedBtn);
-      }
-      else if (pressedBtn === 'add-model') {
-        if (type === 'jpg' || type === 'hdr') alert('Wrong file format selected');
-        else this.resources.load(path, type);
+        if (type !== 'jpg' && type !== 'hdr') {
+          this.experience.triggerErrorHintDiv('Wrong file format selected');
+        } else {
+          this.resources.load(path, type, pressedBtn)
+        }
+      } else if (pressedBtn === 'add-model') {
+        if (type === 'jpg' || type === 'hdr') {
+          this.experience.triggerErrorHintDiv('Wrong file format selected');
+        } else {
+          this.resources.load(path, type)
+        }
       }
     })
 

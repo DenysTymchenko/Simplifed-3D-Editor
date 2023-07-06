@@ -80,7 +80,7 @@ export default class Resources extends EventEmitter {
         break;
 
       default:
-        alert('This file type is not supported');
+        this.experience.triggerErrorHintDiv('This file type is not supported');
         break;
     }
   }
