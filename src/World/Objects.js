@@ -7,6 +7,7 @@ export default class Objects {
     this.scene = this.experience.scene;
     this.transformControls = this.experience.camera.transformControls;
     this.resources = this.experience.resources;
+    this.controlPanel = this.experience.controlPanel;
 
     this.active = null;
     this.outline = null;
@@ -24,12 +25,24 @@ export default class Objects {
   setActive(model) {
     this.removeActive();
 
-    const geometry = new THREE.EdgesGeometry(model.geometry ? model.geometry : model.children[0].geometry);
+    const geometry = new THREE.EdgesGeometry(model.children[0].geometry);
     this.outline = new THREE.LineSegments(geometry, new THREE.LineBasicMaterial({ color: 0xffffff }));
     this.scene.add(this.outline);
 
     this.active = model;
+    this.active.materials = this.getModelMaterials(model);
     this.transformControls.attach(model);
+  }
+
+  getModelMaterials(model, materials = []) {
+    if (model.material) {
+      model.material.transparent = true;
+      materials.push(model.material);
+    }
+
+    if (model.children) model.children.forEach(child => this.getModelMaterials(child, materials));
+
+    return materials;
   }
 
   removeActive() {
@@ -42,5 +55,11 @@ export default class Objects {
 
   updateActiveOutline() {
     this.outline?.position.copy(this.active?.position);
+  }
+
+  changeMaterial(input) {
+    this.active.materials.forEach(material => {
+      input.id === 'color' ? material.color.set(input.value) : material[input.id] = input.value;
+    });
   }
 }

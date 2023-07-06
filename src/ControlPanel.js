@@ -5,11 +5,20 @@ export default class ControlPanel {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+    this.world = this.experience.world;
 
     this.instance = document.querySelector('.control-panel');
-    this.addModelbtn = document.getElementById('add-model');
+    this.inputs = [
+      this.addModelbtn = document.getElementById('add-model'),
+      this.colorInput = document.getElementById('color'),
+      this.opacityInput = document.getElementById('opacity'),
+      this.metalnessInput = document.getElementById('metalness'),
+      this.roughnessInput = document.getElementById('roughness'),
+    ]
 
-    this.addModelbtn.addEventListener('click', () => this.importData())
+
+    this.addModelbtn.addEventListener('click', () => this.importData());
+    this.inputs.forEach(input => input.addEventListener('input', () => this.world.objects.changeMaterial(input)));
   }
 
   importData() {
