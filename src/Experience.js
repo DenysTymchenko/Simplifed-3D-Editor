@@ -26,6 +26,8 @@ export default class Experience {
     this.controlPanel = new ControlPanel(); // The logic of all control panel (it's buttons, inputs, etc.) contains here
     this.raycater = new Raycaster();
 
+    this.scene.background = new THREE.Color('#323232');
+
     this.sizes.on('resize', () => this.resize());
     this.time.on('tick', () => this.update());
   }
