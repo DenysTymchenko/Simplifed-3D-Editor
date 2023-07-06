@@ -32,6 +32,8 @@ export default class Objects {
     this.active = model;
     this.active.materials = this.getModelMaterials(model);
     this.transformControls.attach(model);
+
+    this.updateInputs();
   }
 
   getModelMaterials(model, materials = []) {
@@ -60,6 +62,15 @@ export default class Objects {
   changeMaterial(input) {
     this.active.materials.forEach(material => {
       input.id === 'color' ? material.color.set(input.value) : material[input.id] = input.value;
+    });
+  }
+
+  updateInputs() {
+    this.active.materials.forEach(material => {  
+      this.experience.controlPanel.colorInput.value = `#${material.color.getHexString()}`;
+      this.experience.controlPanel.opacityInput.value = material.opacity;
+      this.experience.controlPanel.metalnessInput.value = material.metalness;
+      this.experience.controlPanel.roughnessInput.value = material.roughness;
     });
   }
 }
