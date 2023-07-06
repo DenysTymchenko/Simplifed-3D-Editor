@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
@@ -10,7 +11,9 @@ export default class Resources extends EventEmitter {
     super();
     this.experience = new Experience();
 
-    this.items = [];
+    this.models = [];
+    this.latestModel = null;
+    this.latestEnvMap = null;
 
     this.setInstance();
   }
@@ -26,6 +29,7 @@ export default class Resources extends EventEmitter {
 
     this.loaders.fbxLoader = new FBXLoader();
     this.loaders.rgbeLoader = new RGBELoader();
+    this.loaders.textureLoader = new THREE.TextureLoader();
   }
 
   load(path, type) {
@@ -35,7 +39,8 @@ export default class Resources extends EventEmitter {
         this.loaders.gltfLoader.load(
           path,
           (model) => {
-            this.items.push(model.scene);
+            this.models.push(model.scene);
+            this.latestModel = model.scene;
             this.trigger('newModel');
           }
         );
@@ -45,7 +50,8 @@ export default class Resources extends EventEmitter {
         this.loaders.fbxLoader.load(
           path,
           (model) => {
-            this.items.push(model);
+            this.models.push(model);
+            this.latestModel = model.scene;
             this.trigger('newModel');
           }
         );
@@ -54,11 +60,19 @@ export default class Resources extends EventEmitter {
       case 'hdr':
         this.loaders.rgbeLoader.load(
           path,
-          (background) => {
-            this.items.push(background);
-            this.experience.world.setBackground(background);
-          }
-        );
+          (envMap) => {
+            this.latestEnvMap = envMap;
+            this.trigger('setBg')
+          });
+        break;
+
+      case 'jpg':
+        this.loaders.textureLoader.load(
+          path,
+          (envMap) => {
+            this.latestEnvMap = envMap;
+            this.trigger('setBg')
+          });
         break;
 
       default:

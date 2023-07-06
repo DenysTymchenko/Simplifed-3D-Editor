@@ -7,7 +7,7 @@ export default class ControlPanel {
     this.resources = this.experience.resources;
     this.world = this.experience.world;
 
-    this.addModelbtn = document.getElementById('add-model'),
+    this.addModelbtn = document.getElementById('add-model');
     this.configureTab = document.getElementById('configure-tab');
     this.configureTab.inputs = [
       this.colorInput = document.getElementById('color'),
@@ -17,12 +17,12 @@ export default class ControlPanel {
     ];
     this.setBackgroundBtn = document.getElementById('set-bg');
 
-    this.addModelbtn.addEventListener('click', () => this.importData());
-    this.setBackgroundBtn.addEventListener('click', () => this.importData());
+    this.addModelbtn.addEventListener('click', (e) => this.importData(e));
+    this.setBackgroundBtn.addEventListener('click', (e) => this.importData(e));
     this.configureTab.inputs.forEach(input => input.addEventListener('input', () => this.world.objects.changeMaterial(input)));
   }
 
-  importData() {
+  importData(e) {
     const input = document.createElement('input');
     input.type = 'file';
     input.addEventListener('change', () => {
@@ -30,7 +30,14 @@ export default class ControlPanel {
       const path = URL.createObjectURL(file);
       const type = file.name.split('.').pop();
 
-      this.resources.load(path, type);
+      if (e.target.id === 'set-bg') {
+        if (type !== 'jpg' && type !== 'hdr') alert('bip-bap');
+        else this.resources.load(path, type);
+      }
+      else if (e.target.id === 'add-model') {
+        if (type === 'jpg' || type === 'hdr') alert('mip-map');
+        else this.resources.load(path, type);
+      }
     })
 
     input.click();

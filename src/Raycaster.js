@@ -22,10 +22,10 @@ export default class Raycaster {
     this.instance = new THREE.Raycaster();
     this.instance.setFromCamera(this.mouse, this.camera.instance);
 
-    this.intersect = this.instance.intersectObjects(this.resources.items)[0];
+    this.intersect = this.instance.intersectObjects(this.resources.models)[0];
 
     if (this.intersect) {
-      const item = this.resources.items.find(item => item.children[0] === this.intersect.object);
+      const item = this.resources.models.find(item => item.children[0] === this.intersect.object);
       this.world.objects.setActive(item);
     }
   }

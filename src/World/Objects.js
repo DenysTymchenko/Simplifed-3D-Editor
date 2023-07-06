@@ -16,8 +16,7 @@ export default class Objects {
   }
 
   addNewModelToTheScene() {
-    const newModel = this.resources.items[this.resources.items.length - 1];
-    newModel.addEventListener('click', () => console.log('check'))
+    const newModel = this.resources.latestModel;
     this.scene.add(newModel);
     this.setActive(newModel)
   }
