@@ -18,10 +18,6 @@ export default class World {
   }
 
   setBackground() {
-    const envMap = this.resources.latestEnvMap;
-    envMap.mapping = THREE.EquirectangularReflectionMapping;
-    envMap.colorSpace = THREE.SRGBColorSpace;
-
-    this.scene.background = envMap;
+    this.scene.background = this.resources.latestEnvMap;
   }
 }

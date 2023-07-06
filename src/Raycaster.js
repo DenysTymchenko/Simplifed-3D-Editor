@@ -25,8 +25,7 @@ export default class Raycaster {
     this.intersect = this.instance.intersectObjects(this.resources.models)[0];
 
     if (this.intersect) {
-      const item = this.resources.models.find(item => item.children[0] === this.intersect.object);
-      this.world.models.setActive(item);
+      this.world.models.setActive(this.intersect.object);
     }
   }
 }

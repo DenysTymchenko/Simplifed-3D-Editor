@@ -5,15 +5,22 @@
   overflow: hidden;
 }
 
+body {
+  cursor: move;
+}
+
 ul {
   list-style: none;
 }
 
 li {
   color: white;
-  cursor: pointer;
   padding: 10px;
   margin-right: 20px;
+}
+
+li#set-model-envMap {
+  cursor: pointer;
 }
 
 li.disabled {
@@ -21,6 +28,7 @@ li.disabled {
 }
 
 ul.control-panel > li {
+  cursor: pointer;
   display: inline-block;
 }
 
@@ -31,7 +39,10 @@ ul.control-panel > li ul {
 
 ul.control-panel > li:hover ul {
   display: block;
-  opacity: 1;
+}
+
+ul.control-panel > li:hover ul li {
+  cursor: default;
 }
 
 ul.control-panel > li.disabled:hover ul {

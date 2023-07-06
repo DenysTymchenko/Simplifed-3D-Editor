@@ -7,12 +7,11 @@ export default class Models {
     this.scene = this.experience.scene;
     this.transformControls = this.experience.camera.transformControls;
     this.resources = this.experience.resources;
-    this.controlPanel = this.experience.controlPanel;
 
     this.active = null;
-    this.outline = null;
 
     this.resources.on('newModel', () => this.addNewModelToTheScene());
+    this.resources.on('setModelEnvMap', () => this.setEnvMap());
   }
 
   addNewModelToTheScene() {
@@ -23,10 +22,6 @@ export default class Models {
 
   setActive(model) {
     this.removeActive();
-
-    const geometry = new THREE.EdgesGeometry(model.children[0].geometry);
-    this.outline = new THREE.LineSegments(geometry, new THREE.LineBasicMaterial({ color: 0xffffff }));
-    this.scene.add(this.outline);
 
     this.active = model;
     this.active.materials = this.getModelMaterials(model);
@@ -47,21 +42,18 @@ export default class Models {
   }
 
   removeActive() {
-    this.scene.remove(this.outline);
-    this.outline = null;
-
     this.active = null;
     this.transformControls.detach();
-  }
-
-  updateActiveOutline() {
-    this.outline?.position.copy(this.active?.position);
   }
 
   changeMaterial(input) {
     this.active.materials.forEach(material => {
       input.id === 'color' ? material.color.set(input.value) : material[input.id] = input.value;
     });
+  }
+
+  setEnvMap() {
+    this.active.materials.forEach(material => material.envMap = this.resources.latestEnvMap);
   }
 
   updateInputs() {

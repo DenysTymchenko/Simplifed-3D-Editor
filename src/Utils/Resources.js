@@ -32,7 +32,7 @@ export default class Resources extends EventEmitter {
     this.loaders.textureLoader = new THREE.TextureLoader();
   }
 
-  load(path, type) {
+  load(path, type, pressedBtn) {
     switch (type) {
       case 'gltf':
       case 'glb':
@@ -61,8 +61,10 @@ export default class Resources extends EventEmitter {
         this.loaders.rgbeLoader.load(
           path,
           (envMap) => {
+            envMap.mapping = THREE.EquirectangularReflectionMapping;
+            envMap.colorSpace = THREE.SRGBColorSpace;
             this.latestEnvMap = envMap;
-            this.trigger('setBg')
+            pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
           });
         break;
 
@@ -70,8 +72,10 @@ export default class Resources extends EventEmitter {
         this.loaders.textureLoader.load(
           path,
           (envMap) => {
+            envMap.mapping = THREE.EquirectangularReflectionMapping;
+            envMap.colorSpace = THREE.SRGBColorSpace;
             this.latestEnvMap = envMap;
-            this.trigger('setBg')
+            pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
           });
         break;
 

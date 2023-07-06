@@ -5,7 +5,7 @@ import Camera from './Camera';
 import Renderer from './Renderer';
 import World from './World/World';
 import Resources from './Utils/Resources';
-import ControlPanel from './ControlPanel';
+import ControlPanel from './Utils/ControlPanel.js';
 import Raycaster from './Raycaster';
 
 let instance = null;
@@ -39,7 +39,6 @@ export default class Experience {
     !this.world.models.active
       ? this.controlPanel.disableModelConfiguration()
       : this.controlPanel.enableModelConfiguration();
-    this.world.models.updateActiveOutline();
     this.renderer.update();
   }
 }
