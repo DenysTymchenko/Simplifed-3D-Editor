@@ -51,7 +51,7 @@ export default class Resources extends EventEmitter {
           path,
           (model) => {
             this.models.push(model);
-            this.latestModel = model.scene;
+            this.latestModel = model;
             this.trigger('newModel');
           }
         );

@@ -18,7 +18,7 @@ export default class Objects {
   addNewModelToTheScene() {
     const newModel = this.resources.latestModel;
     this.scene.add(newModel);
-    this.setActive(newModel)
+    this.setActive(newModel);
   }
 
   setActive(model) {
