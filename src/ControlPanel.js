@@ -7,8 +7,8 @@ export default class ControlPanel {
     this.resources = this.experience.resources;
     this.world = this.experience.world;
 
-    this.instance = document.querySelector('.control-panel');
-    this.inputs = [
+    this.configureTab = document.getElementById('configure-tab');
+    this.configureTab.inputs = [
       this.addModelbtn = document.getElementById('add-model'),
       this.colorInput = document.getElementById('color'),
       this.opacityInput = document.getElementById('opacity'),
@@ -18,7 +18,7 @@ export default class ControlPanel {
 
 
     this.addModelbtn.addEventListener('click', () => this.importData());
-    this.inputs.forEach(input => input.addEventListener('input', () => this.world.objects.changeMaterial(input)));
+    this.configureTab.inputs.forEach(input => input.addEventListener('input', () => this.world.objects.changeMaterial(input)));
   }
 
   importData() {
@@ -33,5 +33,13 @@ export default class ControlPanel {
     })
 
     input.click();
+  }
+
+  disableModelConfiguration() {
+    this.configureTab.classList.add('disabled');
+  }
+
+  enableModelConfiguration() {
+    this.configureTab.classList.remove('disabled');
   }
 }

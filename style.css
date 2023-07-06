@@ -16,6 +16,10 @@ li {
   margin-right: 20px;
 }
 
+li.disabled {
+  color: gray
+}
+
 ul.control-panel > li {
   display: inline-block;
 }
@@ -30,6 +34,9 @@ ul.control-panel > li:hover ul {
   opacity: 1;
 }
 
+ul.control-panel > li.disabled:hover ul {
+  display: none;
+}
 
 .webgl {
   position: fixed;
