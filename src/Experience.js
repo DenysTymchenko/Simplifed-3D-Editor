@@ -52,7 +52,6 @@ export default class Experience {
     !this.world.models.active
       ? this.controlPanel.disableModelConfiguration()
       : this.controlPanel.enableModelConfiguration();
-    // this.renderer.update();
     this.effectComposer.instance.render();
   }
 }
