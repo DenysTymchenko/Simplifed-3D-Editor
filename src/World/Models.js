@@ -31,6 +31,7 @@ export default class Models {
   removeActive() {
     this.active = null;
     this.transformControls.detach();
+    this.effectComposer.outlinePass.selectedObjects = [];
   }
 
   changeMaterial(input) {
