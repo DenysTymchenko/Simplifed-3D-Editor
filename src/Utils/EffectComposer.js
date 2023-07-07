@@ -51,4 +51,9 @@ export default class _EffectComposer {
     this.antiAliasing = new ShaderPass(FXAAShader);
     this.instance.addPass(this.antiAliasing);
   }
+
+  resize() {
+    this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.instance.setSize(this.sizes.width, this.sizes.height);
+  }
 }
