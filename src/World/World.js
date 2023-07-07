@@ -9,11 +9,11 @@ export default class World {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
 
-    this.environment = new Environment();
+    this.environment = new Environment(); // Lights are stored here
     this.floor = new Floor();
-    this.models = new Models();
+    this.models = new Models(); // All work with added models is stored here
 
-    this.resources.on('setBg', () => {
+    this.resources.on('bgLoaded', () => {
       this.scene.background = this.resources.latestTexture;
     });
   }

@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
@@ -5,7 +6,6 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { GammaCorrectionShader } from 'three/addons/shaders/GammaCorrectionShader.js';
 import Experience from '../Experience.js';
-import * as THREE from 'three';
 
 export default class _EffectComposer {
   constructor() {
@@ -17,8 +17,8 @@ export default class _EffectComposer {
 
     this.setInstance();
     this.setRenderPass();
-    this.setOutlinePass();
-    this.fixColor();
+    this.setOutlinePass(); // will be used for making active objects outline
+    this.fixColor(); // By default, when using EffectComposer, everything is much darker than it should be.
     this.setAntiAliasing()
   }
 
@@ -55,5 +55,9 @@ export default class _EffectComposer {
   resize() {
     this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.instance.setSize(this.sizes.width, this.sizes.height);
+  }
+
+  update() {
+    this.instance.render();
   }
 }

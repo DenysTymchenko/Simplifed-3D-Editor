@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import Experience from './Experience.js';
-import { TransformControlsPlane } from 'three/addons/controls/TransformControls.js';
 
 export default class Raycaster {
   constructor() {
@@ -17,7 +16,7 @@ export default class Raycaster {
     });
 
     window.addEventListener('mousedown', (e) => {
-      if (e.button === 0) {
+      if (e.button === 0) { // checks if left mouse button pressed
         if (e.target.className === 'webgl') this.castRay();
       }
     });
@@ -27,17 +26,21 @@ export default class Raycaster {
     this.instance = new THREE.Raycaster();
     this.instance.setFromCamera(this.mouse, this.camera.instance);
 
-    this.modelIntersect = this.instance.intersectObjects(this.resources.models)[0];
-    this.sceneIntersect = this.instance.intersectObjects(this.experience.scene.children)[0];
+    this.modelIntersect = this.instance.intersectObjects(this.resources.models)[0]; // Taking first intersecting model on scene
+    this.sceneIntersect = this.instance.intersectObjects(this.experience.scene.children)[0]; // Taking first intersecting scene child
 
     const sceneIntersectType = this.sceneIntersect.object.type;
 
     if (this.modelIntersect) {
       if (this.modelIntersect.object !== this.world.models.active) {
-        // console.log(this.modelIntersect.object.getSize());
         this.world.models.setActive(this.modelIntersect.object);
       }
     } else if (sceneIntersectType === 'TransformControlsPlane' || sceneIntersectType === 'Line') {
+      // TransformControlsPlane - is background.
+      // Line - is the line that TransformControls creating.
+      // It's invisible, when we are not dragging controls, which can cause misunderstanding:
+      // if Line is invisible and parallel with background, we can press on it accidentally instead of bg,
+      // and don't understand why TransformControls didn't disappear.
       this.world.models.removeActive();
     }
   }

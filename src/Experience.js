@@ -49,9 +49,10 @@ export default class Experience {
   }
 
   update() {
+    //Enabling configuration menu, when there is an active model
     !this.world.models.active
       ? this.controlPanel.disableModelConfiguration()
       : this.controlPanel.enableModelConfiguration();
-    this.effectComposer.instance.render();
+    this.effectComposer.update();
   }
 }

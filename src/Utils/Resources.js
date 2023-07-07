@@ -11,7 +11,7 @@ export default class Resources extends EventEmitter {
     super();
     this.experience = new Experience();
 
-    this.models = [];
+    this.models = []; // will be used to check if mouse is intersecting with any models on scene, on raycasting
     this.latestModel = null;
     this.latestTexture = null;
 
@@ -36,54 +36,19 @@ export default class Resources extends EventEmitter {
     switch (type) {
       case 'gltf':
       case 'glb':
-        this.loaders.gltfLoader.load(
-          path,
-          (model) => {
-            this.models.push(model.scene);
-            this.latestModel = model.scene;
-            this.trigger('newModel');
-          }
-        );
+        this.loaders.gltfLoader.load(path, (model) => this.modelLoadedCallback(model));
         break;
 
       case 'fbx':
-        this.loaders.fbxLoader.load(
-          path,
-          (model) => {
-            this.models.push(model);
-            this.latestModel = model;
-            this.trigger('newModel');
-          }
-        );
+        this.loaders.fbxLoader.load(path, (model) => this.modelLoadedCallback(model));
         break;
 
       case 'hdr':
-        this.loaders.rgbeLoader.load(
-          path,
-          (envMap) => {
-            envMap.mapping = THREE.EquirectangularReflectionMapping;
-            envMap.colorSpace = THREE.SRGBColorSpace;
-            this.latestTexture = envMap;
-            pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
-          });
+        this.loaders.rgbeLoader.load(path, (envMap) => this.envMapLoadedCallback(envMap, pressedBtn));
         break;
 
       case 'jpg':
-        this.loaders.textureLoader.load(
-          path,
-          (texture) => {
-            this.latestTexture = texture;
-
-            if (pressedBtn === 'set-bg' || pressedBtn === 'set-model-envMap') {
-              texture.mapping = THREE.EquirectangularReflectionMapping;
-              texture.colorSpace = THREE.SRGBColorSpace;
-              pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
-            } else if (pressedBtn === 'set-map') {
-              this.trigger('setMap');
-            } else if (pressedBtn === 'set-normalMap') {
-              this.trigger('setEnvMap');
-            }
-          });
+        this.loaders.textureLoader.load(path, (texture) => this.textureLoadedCallback(texture, pressedBtn));
         break;
 
       default:
@@ -92,7 +57,29 @@ export default class Resources extends EventEmitter {
     }
   }
 
-  deactivateActive() {
-    this.scene.remove(this.outline);
+  modelLoadedCallback(model) {
+    this.models.push(model.scene || model);
+    this.latestModel = model.scene || model;
+    this.trigger('newModelLoaded');
   }
+
+  envMapLoadedCallback(envMap, pressedBtn) {
+    envMap.mapping = THREE.EquirectangularReflectionMapping;
+    envMap.colorSpace = THREE.SRGBColorSpace;
+    this.latestTexture = envMap;
+    pressedBtn === 'set-bg' ? this.trigger('bgLoaded') : this.trigger('envMapLoaded');
+  }
+
+  textureLoadedCallback(texture, pressedBtn) {
+    this.latestTexture = texture;
+
+    if (pressedBtn === 'set-map') this.trigger('mapLoaded');
+    if (pressedBtn === 'set-normalMap') this.trigger('normalMapLoaded');
+    if (pressedBtn === 'set-bg' || pressedBtn === 'set-model-envMap') {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      pressedBtn === 'set-bg' ? this.trigger('bgLoaded') : this.trigger('envMapLoaded');
+    }
+  }
+
 }
