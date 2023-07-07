@@ -10,7 +10,7 @@ export default class Models {
 
     this.active = null;
 
-    this.resources.on('newModel', () => this.addNewModelToTheScene());
+    this.resources.on('newModel', () => this.scene.add(this.resources.latestModel));
     this.resources.on('setModelEnvMap', () => this.setEnvMap());
   }
 

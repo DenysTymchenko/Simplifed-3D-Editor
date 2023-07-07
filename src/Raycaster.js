@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Experience from './Experience.js';
+import { TransformControlsPlane } from 'three/addons/controls/TransformControls.js';
 
 export default class Raycaster {
   constructor() {
@@ -15,17 +16,27 @@ export default class Raycaster {
       this.mouse.y = -(e.clientY / this.sizes.height) * 2 + 1;
     });
 
-    window.addEventListener('click', () => this.castRay());
+    window.addEventListener('mousedown', (e) => {
+      if (e.button === 0) {
+        if (e.target.className === 'webgl') this.castRay();
+      }
+    });
   }
 
   castRay() {
     this.instance = new THREE.Raycaster();
     this.instance.setFromCamera(this.mouse, this.camera.instance);
 
-    this.intersect = this.instance.intersectObjects(this.resources.models)[0];
+    this.modelIntersect = this.instance.intersectObjects(this.resources.models)[0];
+    this.sceneIntersect = this.instance.intersectObjects(this.experience.scene.children)[0];
 
-    if (this.intersect) {
-      this.world.models.setActive(this.intersect.object);
+    const sceneIntersectType = this.sceneIntersect.object.type;
+
+    if (this.modelIntersect) {
+      if (this.modelIntersect.object !== this.world.models.active)
+        this.world.models.setActive(this.modelIntersect.object);
+    } else if (sceneIntersectType === 'TransformControlsPlane' || sceneIntersectType === 'Line') {
+      this.world.models.removeActive();
     }
   }
 }

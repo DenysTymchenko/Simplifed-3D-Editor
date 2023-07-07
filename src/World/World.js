@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import Experience from '../Experience.js';
 import Environment from './Environment.js';
 import Floor from './Floor.js';
@@ -14,10 +13,8 @@ export default class World {
     this.floor = new Floor();
     this.models = new Models();
 
-    this.resources.on('setBg', () => this.setBackground());
-  }
-
-  setBackground() {
-    this.scene.background = this.resources.latestEnvMap;
+    this.resources.on('setBg', () => {
+      this.scene.background = this.resources.latestEnvMap
+    });
   }
 }
