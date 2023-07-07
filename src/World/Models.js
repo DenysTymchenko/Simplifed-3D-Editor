@@ -12,6 +12,8 @@ export default class Models {
 
     this.resources.on('newModel', () => this.scene.add(this.resources.latestModel));
     this.resources.on('setModelEnvMap', () => this.setEnvMap());
+    this.resources.on('setMap', () => this.setMap());
+    this.resources.on('setEnvMap', () => this.setNormalMap())
   }
 
   addNewModelToTheScene() {
@@ -53,7 +55,19 @@ export default class Models {
   }
 
   setEnvMap() {
-    this.active.materials.forEach(material => material.envMap = this.resources.latestEnvMap);
+    this.active.materials.forEach(material => material.envMap = this.resources.latestTexture);
+  }
+
+  setMap() {
+    console.log(this.active.materials)
+    this.active.materials.forEach(material => material.map = this.resources.latestTexture)
+    console.log(this.active.materials)
+  }
+
+  setNormalMap() {
+    console.log(this.active.materials)
+    this.active.materials.forEach(material => material.normalMap = this.resources.latestTexture);
+    console.log(this.active.materials)
   }
 
   updateInputs() {

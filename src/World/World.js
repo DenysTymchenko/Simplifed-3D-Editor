@@ -14,7 +14,7 @@ export default class World {
     this.models = new Models();
 
     this.resources.on('setBg', () => {
-      this.scene.background = this.resources.latestEnvMap
+      this.scene.background = this.resources.latestTexture;
     });
   }
 }

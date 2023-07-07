@@ -13,7 +13,7 @@ export default class Resources extends EventEmitter {
 
     this.models = [];
     this.latestModel = null;
-    this.latestEnvMap = null;
+    this.latestTexture = null;
 
     this.setInstance();
   }
@@ -71,11 +71,18 @@ export default class Resources extends EventEmitter {
       case 'jpg':
         this.loaders.textureLoader.load(
           path,
-          (envMap) => {
-            envMap.mapping = THREE.EquirectangularReflectionMapping;
-            envMap.colorSpace = THREE.SRGBColorSpace;
-            this.latestEnvMap = envMap;
-            pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
+          (texture) => {
+            this.latestTexture = texture;
+
+            if (pressedBtn === 'set-bg' || pressedBtn === 'set-model-envMap') {
+              texture.mapping = THREE.EquirectangularReflectionMapping;
+              texture.colorSpace = THREE.SRGBColorSpace;
+              pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
+            } else if (pressedBtn === 'set-map') {
+              this.trigger('setMap');
+            } else if (pressedBtn === 'set-normalMap') {
+              this.trigger('setEnvMap');
+            }
           });
         break;
 

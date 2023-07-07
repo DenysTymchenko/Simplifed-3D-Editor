@@ -22,7 +22,9 @@ li {
   margin-right: 20px;
 }
 
-li#set-model-envMap {
+li#set-model-envMap,
+li#set-map,
+li#set-normalMap {
   cursor: pointer;
 }
 

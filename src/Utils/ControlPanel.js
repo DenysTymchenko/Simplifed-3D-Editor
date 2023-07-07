@@ -12,6 +12,8 @@ export default class ControlPanel {
       this.addModelbtn = document.getElementById('add-model'),
       this.setModelEnvMapBtn = document.getElementById('set-model-envMap'),
       this.setBackgroundBtn = document.getElementById('set-bg'),
+      this.setMap = document.getElementById('set-map'),
+      this.setNormalMap = document.getElementById('set-normalMap'),
     ];
     this.inputs = [
       this.colorInput = document.getElementById('color'),
@@ -40,6 +42,9 @@ export default class ControlPanel {
         } else {
           this.resources.load(path, type, pressedBtn)
         }
+      } else if (pressedBtn === 'set-map' || pressedBtn === 'set-normalMap') {
+        if (type === 'jpg') this.resources.load(path, type, pressedBtn);
+        else this.experience.triggerErrorHintDiv('Wrong file format selected');
       } else if (pressedBtn === 'add-model') {
         if (type === 'jpg' || type === 'hdr') {
           this.experience.triggerErrorHintDiv('Wrong file format selected');
