@@ -33,8 +33,10 @@ export default class Raycaster {
     const sceneIntersectType = this.sceneIntersect.object.type;
 
     if (this.modelIntersect) {
-      if (this.modelIntersect.object !== this.world.models.active)
+      if (this.modelIntersect.object !== this.world.models.active) {
+        // console.log(this.modelIntersect.object.getSize());
         this.world.models.setActive(this.modelIntersect.object);
+      }
     } else if (sceneIntersectType === 'TransformControlsPlane' || sceneIntersectType === 'Line') {
       this.world.models.removeActive();
     }

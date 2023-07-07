@@ -63,7 +63,7 @@ export default class Resources extends EventEmitter {
           (envMap) => {
             envMap.mapping = THREE.EquirectangularReflectionMapping;
             envMap.colorSpace = THREE.SRGBColorSpace;
-            this.latestEnvMap = envMap;
+            this.latestTexture = envMap;
             pressedBtn === 'set-bg' ? this.trigger('setBg') : this.trigger('setModelEnvMap');
           });
         break;

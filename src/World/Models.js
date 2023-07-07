@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
 import Experience from '../Experience';
 
 export default class Models {
@@ -7,6 +7,7 @@ export default class Models {
     this.scene = this.experience.scene;
     this.transformControls = this.experience.camera.transformControls;
     this.resources = this.experience.resources;
+    this.effectComposer = this.experience.effectComposer;
 
     this.active = null;
 
@@ -16,31 +17,15 @@ export default class Models {
     this.resources.on('setEnvMap', () => this.setNormalMap())
   }
 
-  addNewModelToTheScene() {
-    const newModel = this.resources.latestModel;
-    this.scene.add(newModel);
-    this.setActive(newModel);
-  }
-
   setActive(model) {
     this.removeActive();
 
     this.active = model;
-    this.active.materials = this.getModelMaterials(model);
+    this.active.material.transparent = true;
     this.transformControls.attach(model);
+    this.effectComposer.outlinePass.selectedObjects = [model];
 
     this.updateInputs();
-  }
-
-  getModelMaterials(model, materials = []) {
-    if (model.material) {
-      model.material.transparent = true;
-      materials.push(model.material);
-    }
-
-    if (model.children) model.children.forEach(child => this.getModelMaterials(child, materials));
-
-    return materials;
   }
 
   removeActive() {
@@ -49,33 +34,27 @@ export default class Models {
   }
 
   changeMaterial(input) {
-    this.active.materials.forEach(material => {
-      input.id === 'color' ? material.color.set(input.value) : material[input.id] = input.value;
-    });
+    input.id === 'color'
+      ? this.active.material.color.set(input.value)
+      : this.active.material[input.id] = input.value;
   }
 
   setEnvMap() {
-    this.active.materials.forEach(material => material.envMap = this.resources.latestTexture);
+    this.active.material.envMap = this.resources.latestTexture;
   }
 
   setMap() {
-    console.log(this.active.materials)
-    this.active.materials.forEach(material => material.map = this.resources.latestTexture)
-    console.log(this.active.materials)
+    this.active.material.map = this.resources.latestTexture;
   }
 
   setNormalMap() {
-    console.log(this.active.materials)
-    this.active.materials.forEach(material => material.normalMap = this.resources.latestTexture);
-    console.log(this.active.materials)
+    this.active.material.normalMap = this.resources.latestTexture;
   }
 
   updateInputs() {
-    this.active.materials.forEach(material => {
-      this.experience.controlPanel.colorInput.value = `#${material.color.getHexString()}`;
-      this.experience.controlPanel.opacityInput.value = material.opacity;
-      this.experience.controlPanel.metalnessInput.value = material.metalness;
-      this.experience.controlPanel.roughnessInput.value = material.roughness;
-    });
+    this.experience.controlPanel.colorInput.value = `#${this.active.material.color.getHexString()}`;
+    this.experience.controlPanel.opacityInput.value = this.active.material.opacity;
+    this.experience.controlPanel.metalnessInput.value = this.active.material.metalness;
+    this.experience.controlPanel.roughnessInput.value = this.active.material.roughness;
   }
 }

@@ -3,6 +3,7 @@ import Sizes from './Utils/Sizes';
 import Time from './Utils/Time';
 import Camera from './Camera';
 import Renderer from './Renderer';
+import _EffectComposer from './Utils/EffectComposer';
 import World from './World/World';
 import Resources from './Utils/Resources';
 import ControlPanel from './Utils/ControlPanel.js';
@@ -22,6 +23,7 @@ export default class Experience {
     this.scene = new THREE.Scene();
     this.camera = new Camera();
     this.renderer = new Renderer();
+    this.effectComposer = new _EffectComposer();
     this.resources = new Resources();
     this.world = new World();
     this.controlPanel = new ControlPanel(); // The logic of all control panel (it's buttons, inputs, etc.) contains here
@@ -49,6 +51,7 @@ export default class Experience {
     !this.world.models.active
       ? this.controlPanel.disableModelConfiguration()
       : this.controlPanel.enableModelConfiguration();
-    this.renderer.update();
+    // this.renderer.update();
+    this.effectComposer.instance.render();
   }
 }
