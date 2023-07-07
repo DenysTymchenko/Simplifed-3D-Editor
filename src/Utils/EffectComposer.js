@@ -1,6 +1,9 @@
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+import { GammaCorrectionShader } from 'three/addons/shaders/GammaCorrectionShader.js';
 import Experience from '../Experience.js';
 import * as THREE from 'three';
 
@@ -15,6 +18,8 @@ export default class _EffectComposer {
     this.setInstance();
     this.setRenderPass();
     this.setOutlinePass();
+    this.fixColor();
+    this.setAntiAliasing()
   }
 
   setInstance() {
@@ -35,5 +40,15 @@ export default class _EffectComposer {
       this.camera.instance,
     );
     this.instance.addPass(this.outlinePass);
+  }
+
+  fixColor() {
+    this.gammaCorrection = new ShaderPass(GammaCorrectionShader);
+    this.instance.addPass(this.gammaCorrection);
+  }
+
+  setAntiAliasing() {
+    this.antiAliasing = new ShaderPass(FXAAShader);
+    this.instance.addPass(this.antiAliasing);
   }
 }
